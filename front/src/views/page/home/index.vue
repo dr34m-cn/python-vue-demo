@@ -18,7 +18,5 @@
 <style lang="scss" scoped>
 	.home {
 		padding: 16px;
-		height: calc(100% - 32px);
-		min-height: 685px;
 	}
 </style>
