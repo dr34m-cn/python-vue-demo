@@ -1,0 +1,14 @@
+node_modules
+dist
+.idea
+.vscode
+package-lock.json
+
+.idea
+*.log
+__pycache__
+venv
+*.db
+# pyinstaller
+build
+main.spec
