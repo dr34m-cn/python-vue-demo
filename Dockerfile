@@ -1,15 +1,17 @@
-FROM python:3.11.6 AS python-builder
+FROM python:3.11.6-alpine3.18 AS python-builder
 
 WORKDIR /app
 
 COPY ./server ./
 
-RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
+    && apk add binutils \
+    && pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple \
     && pip install -r requirements.txt \
     && pip install pyinstaller \
     && pyinstaller -F main.py
 
-FROM node:16.20.2-slim AS node-builder
+FROM node:16.20.2-alpine3.18 AS node-builder
 
 WORKDIR /app
 
@@ -19,7 +21,7 @@ RUN npm config set registry https://registry.npmmirror.com \
     && npm install \
     && npm run build
 
-FROM nginx:1.25.3
+FROM nginx:1.25.3-alpine3.18
 
 WORKDIR /app
 
